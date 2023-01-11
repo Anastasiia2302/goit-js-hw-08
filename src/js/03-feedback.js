@@ -15,11 +15,13 @@ const textarea = document.querySelector(".feedback-form textarea");
 
 getLocalStorageText();
 
+formFeedback.addEventListener('input', throttle(onInputListener, 500))
 
-formFeedback.addEventListener('input', event => {
+function onInputListener(event)
+ {
 localData[event.target.name] = event.target.value;
 localStorage.setItem(STORAGE_KEY, JSON.stringify(localData));
-console.log(JSON.stringify(localData))});
+console.log(JSON.stringify(localData))};
 
 
 formFeedback.addEventListener('submit', onFormSubmit);
@@ -30,19 +32,18 @@ localStorage.removeItem(STORAGE_KEY)
 }
 
 
-function  getLocalStorageText() {
-
-    let saveText = localData;
-
-    try {saveText = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    
+function getLocalStorageText() {
+    let saveObject;
+  
+    try {
+      saveObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    } catch {
+      saveObject = localData;
     }
-    catch {localData}
-    
-    return inputEmail.value = saveText.email,
-    textarea.value = saveText.message;
-
-
-            
-}
+  
+    if (saveObject === null) saveObject = localData;
+  
+    inputEmail.value = saveObject.email;
+    textarea.value = saveObject.message;
+  }
 
