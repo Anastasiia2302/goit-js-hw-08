@@ -17,9 +17,10 @@ getLocalStorageText();
 
 formFeedback.addEventListener('input', throttle(onInputListener, 500))
 
-function onInputListener(event)
+function onInputListener()
  {
-localData[event.target.name] = event.target.value;
+  localData.email =  inputEmail.value ;
+  localData.message=  textarea.value ;
 localStorage.setItem(STORAGE_KEY, JSON.stringify(localData));
 console.log(JSON.stringify(localData))};
 
